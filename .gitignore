@@ -1,0 +1,99 @@
+# ============================================================
+# ENVIRONMENT VARIABLES
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+
+# ============================================================
+# NODE.JS
+# ============================================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+frontend/dist/
+frontend/dist-ssr/
+
+
+# ============================================================
+# PYTHON
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.venv/
+venv/
+env/
+
+
+# ============================================================
+# JUPYTER
+# ============================================================
+
+.ipynb_checkpoints/
+.virtual_documents/
+
+
+# ============================================================
+# IDE / OS
+# ============================================================
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+*.suo
+*.njsproj
+*.sln
+
+
+# ============================================================
+# PYTHON CACHE / TEMP
+# ============================================================
+
+*.egg-info/
+.coverage
+htmlcov/
+
+
+# ============================================================
+# TEMPORARY FILES
+# ============================================================
+
+*.tmp
+*.temp
+
+# ============================================================
+# LOCAL / PROJECT-SPECIFIC DATA
+# ============================================================
+
+anaconda_projects/
+*.db
+
+# Local datasets
+# Keep datasets out of GitHub unless intentionally publishing them
+ml-service/datasets/
+data/raw/
+
+# Product scam ML local environment/data
+product_scam_ml/.venv/
+product_scam_ml/data/raw/
+product_scam_ml/data/processed/
+
+# Generated / local ML artifacts
+product_scam_ml/__pycache__/
+product_scam_ml/ml-service/__pycache__/
+product_scam_ml/notebooks/.ipynb_checkpoints/

@@ -1,0 +1,54 @@
+{
+    "phase": "4B.2",
+    "dataset": {
+        "name": "amazon_electronics_metadata_sample.parquet",
+        "rows": 10000,
+        "columns": 16
+    },
+    "feature_space": {
+        "total": 26,
+        "usable": 22,
+        "moderate_missingness": 0,
+        "high_missingness": 4,
+        "constant": 0
+    },
+    "nested_parsing": {
+        "features": "numpy.ndarray parsed",
+        "categories": "numpy.ndarray parsed",
+        "images": "nested dict -> actual image URLs counted",
+        "videos": "nested dict -> actual video URLs counted"
+    },
+    "price_statistics": {
+        "category_reference": "leaf category median",
+        "learned_from_training_reference": true,
+        "global_fallback": true
+    },
+    "model": {
+        "type": "IsolationForest",
+        "n_estimators": 300,
+        "contamination": 0.05,
+        "random_state": 42,
+        "training_rows": 10000,
+        "model_features": 22
+    },
+    "risk_engine": {
+        "anomaly_weight": 0.6,
+        "rule_weight": 0.4,
+        "score_range": "0-100",
+        "bands": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+        ]
+    },
+    "ground_truth": {
+        "used_for_production_training": false,
+        "reason": "Production engine is unsupervised. He-associated labels remain separate research benchmark."
+    },
+    "artifacts": {
+        "feature_dataset": "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\data\\raw\\amazon_metadata_26_features.csv.gz",
+        "feature_quality_report": "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\reports\\phase4b2_feature_quality.csv",
+        "model_bundle": "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\models\\trustguard_metadata_isolation_forest.joblib"
+    }
+}

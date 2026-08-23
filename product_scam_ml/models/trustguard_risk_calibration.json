@@ -1,0 +1,37 @@
+{
+    "version": "phase5a2_frozen",
+    "bounds": {
+        "low_q01": -0.032045478482716556,
+        "high_q99": 0.12929170315504226
+    },
+    "risk_weights": {
+        "isolation_forest": 0.6,
+        "risk_indicators": 0.4
+    },
+    "risk_thresholds": {
+        "LOW": [
+            0,
+            25
+        ],
+        "MEDIUM": [
+            25,
+            50
+        ],
+        "HIGH": [
+            50,
+            75
+        ],
+        "CRITICAL": [
+            75,
+            100
+        ]
+    },
+    "indicator_weights": {
+        "extreme_rating": 1.0,
+        "very_low_review_count": 1.0,
+        "high_rating_low_reviews": 1.5,
+        "missing_seller": 1.0,
+        "very_short_title": 0.5,
+        "very_short_description": 0.5
+    }
+}

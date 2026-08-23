@@ -1,0 +1,11 @@
+column,present,missing_pct,unique_count
+title,True,0.0,9984
+description,True,0.0,5597
+features,True,0.0,7678
+categories,True,0.0,658
+images,True,0.0,9915
+videos,True,0.0,4199
+store,True,0.62,5887
+price,True,0.0,1455
+average_rating,True,0.0,40
+rating_number,True,0.0,1418
