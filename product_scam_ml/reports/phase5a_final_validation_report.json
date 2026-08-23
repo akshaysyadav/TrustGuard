@@ -1,0 +1,12 @@
+{
+    "phase": "5A",
+    "dataset_rows": 10000,
+    "model_features": 22,
+    "anomalies_detected": 8739,
+    "synthetic_sanity_check_passed": true,
+    "artifacts_saved": [
+        "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\data\\raw\\phase5a_validation_results.csv.gz",
+        "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\reports\\phase5a_top_risk_explanations.csv",
+        "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\models\\trustguard_risk_calibration.json"
+    ]
+}

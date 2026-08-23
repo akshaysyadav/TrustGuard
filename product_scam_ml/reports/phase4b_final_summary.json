@@ -1,0 +1,31 @@
+{
+    "phase": "4B",
+    "review_rows": 381734,
+    "labeled_products": 3389,
+    "metadata_rows": 10000,
+    "metadata_match_percentage": 0.03,
+    "ground_truth": {
+        "column": "fake_review_product",
+        "product_level_consistency": "PASS",
+        "fake_products": 1494,
+        "genuine_products": 1895
+    },
+    "features": {
+        "total": 26,
+        "usable": 10,
+        "moderate_missingness": 0,
+        "high_missingness": 7,
+        "unusable": 9
+    },
+    "price_features": {
+        "statistics_source": "training_split_only",
+        "price_ratio_to_category": true,
+        "log_price_ratio": true,
+        "price_anomaly": true
+    },
+    "leakage_controls": {
+        "category_statistics_train_only": true,
+        "test_information_used_for_category_statistics": false,
+        "target_used_for_feature_generation": false
+    }
+}

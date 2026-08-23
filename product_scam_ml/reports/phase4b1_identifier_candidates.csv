@@ -1,0 +1,3 @@
+metadata_column,unique_values,review_unique_asins,matched_review_asins,match_percentage
+parent_asin,10000,3389,1,0.029507229271171435
+parent_asin_norm,10000,3389,1,0.029507229271171435

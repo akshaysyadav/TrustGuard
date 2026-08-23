@@ -1,0 +1,27 @@
+feature,required_raw_columns,available_columns,missing_columns,status
+title_length,title,,title,MISSING_INPUT
+title_word_count,title,,title,MISSING_INPUT
+uppercase_ratio,title,,title,MISSING_INPUT
+special_character_ratio,title,,title,MISSING_INPUT
+description_length,description,,description,MISSING_INPUT
+description_word_count,description,,description,MISSING_INPUT
+feature_count,features,,features,MISSING_INPUT
+feature_text_length,features,,features,MISSING_INPUT
+category_count,categories,,categories,MISSING_INPUT
+image_count,images,,images,MISSING_INPUT
+video_count,videos,,videos,MISSING_INPUT
+has_videos,videos,,videos,MISSING_INPUT
+seller_missing,store,,store,MISSING_INPUT
+seller_name_length,store,,store,MISSING_INPUT
+price_numeric,price,,price,MISSING_INPUT
+price_missing,price,,price,MISSING_INPUT
+price_ratio_to_category,"price, categories",,"price, categories",MISSING_INPUT
+log_price_ratio,"price, categories",,"price, categories",MISSING_INPUT
+price_anomaly,"price, categories",,"price, categories",MISSING_INPUT
+average_rating,average_rating,,average_rating,MISSING_INPUT
+rating_number,rating_number,,rating_number,MISSING_INPUT
+log_rating_number,rating_number,,rating_number,MISSING_INPUT
+rating_extremeness,average_rating,,average_rating,MISSING_INPUT
+high_rating,average_rating,,average_rating,MISSING_INPUT
+low_review_count,rating_number,,rating_number,MISSING_INPUT
+high_rating_low_reviews,"average_rating, rating_number",,"average_rating, rating_number",MISSING_INPUT

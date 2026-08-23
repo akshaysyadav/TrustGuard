@@ -1,0 +1,27 @@
+{
+    "phase": "5B.2",
+    "dataset_rows": 10,
+    "model_features": 22,
+    "feature_parity": {
+        "total_comparisons": 220,
+        "mismatches": 53,
+        "passed": false
+    },
+    "prediction_parity": {
+        "rows_tested": 10,
+        "prediction_disagreements": 3,
+        "max_decision_difference": 0.1021827059958217,
+        "passed": false
+    },
+    "production_model": {
+        "contamination": 0.05,
+        "n_estimators": 300,
+        "n_features_in": 22
+    },
+    "calibration": {
+        "low_q01": -0.032045478482716556,
+        "high_q99": 0.12929170315504226,
+        "isolation_weight": 0.6,
+        "indicator_weight": 0.4
+    }
+}

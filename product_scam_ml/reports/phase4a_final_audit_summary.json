@@ -1,0 +1,13 @@
+{
+    "dataset": "C:\\Users\\Aman\\Desktop\\TrustGuard\\product_scam_ml\\data\\raw\\he_associated_review_data\\public_reviews_dataset_cleaned.csv",
+    "rows": 381734,
+    "columns": 23,
+    "fake_review_product_available": true,
+    "product_identifier_available": true,
+    "product_label_consistent": true,
+    "trustguard_features_total": 26,
+    "trustguard_features_computable": 0,
+    "trustguard_features_missing_inputs": 26,
+    "trustguard_feature_compatibility_pct": 0.0,
+    "recommended_production_architecture": "ISOLATION FOREST + INTERPRETABLE RISK INDICATORS"
+}
