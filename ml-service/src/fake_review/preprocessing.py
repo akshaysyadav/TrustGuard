@@ -1,6 +1,17 @@
 import re
 import string
 
+import nltk
+
+def _ensure_nltk_data():
+    for pkg in ["stopwords", "wordnet", "omw-1.4"]:
+        try:
+            nltk.data.find(f"corpora/{pkg}")
+        except LookupError:
+            nltk.download(pkg, quiet=True)
+
+_ensure_nltk_data()
+
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
