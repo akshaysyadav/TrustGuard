@@ -413,7 +413,7 @@ function App() {
         </div>
 
         <div className="nav-status">
-          <span className="status-dot"></span>
+          <span className="status-dot pulse-dot"></span>
           AI Risk Engine Online
         </div>
       </header>
@@ -425,11 +425,6 @@ function App() {
         ============================================ */}
 
         <section className="hero-section">
-
-          <div className="hero-security-badge">
-            <span className="pulse-dot"></span>
-            AI SECURITY PLATFORM
-          </div>
 
           <span className="eyebrow">
             {activeModule.eyebrow}
