@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
+import tgLogo from "./assets/TG_logo.png";
 
 const API_URL = "http://localhost:5000";
 
@@ -57,6 +58,91 @@ const MODULE_CONFIG = {
 };
 
 function App() {
+  // ============================================
+  // HERO NETWORK-GRAPH BACKGROUND
+  // ============================================
+
+  const networkCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = networkCanvasRef.current;
+    if (!canvas) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) return;
+
+    const ctx = canvas.getContext("2d");
+    let frameId;
+    let nodes = [];
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      const count = Math.min(60, Math.floor((canvas.width * canvas.height) / 14000));
+      nodes = new Array(count).fill(0).map(() => ({
+        x: Math.random(),
+        y: Math.random(),
+        vx: (Math.random() - 0.5) * 0.0006,
+        vy: (Math.random() - 0.5) * 0.0006,
+      }));
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    function draw() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      nodes.forEach((n) => {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > 1) n.vx *= -1;
+        if (n.y < 0 || n.y > 1) n.vy *= -1;
+      });
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = (a.x - b.x) * w;
+          const dy = (a.y - b.y) * h;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.strokeStyle = `rgba(34, 211, 238, ${0.12 * (1 - dist / 120)})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x * w, a.y * h);
+            ctx.lineTo(b.x * w, b.y * h);
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach((n) => {
+        ctx.fillStyle = "rgba(34, 211, 238, 0.6)";
+        ctx.beginPath();
+        ctx.arc(n.x * w, n.y * h, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      frameId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   // ============================================
   // TOP-LEVEL MODULE
   // ============================================
@@ -408,34 +494,58 @@ function App() {
 
       <header className="navbar">
         <div className="brand">
-          <div className="brand-icon">T</div>
+          <img src={tgLogo} className="brand-icon" alt="TrustGuard logo" />
           <span>TrustGuard</span>
         </div>
 
-        <div className="nav-status">
-          <span className="status-dot pulse-dot"></span>
-          AI Risk Engine Online
+        <div className="nav-right">
+          <div className="nav-status">
+            <span className="status-dot pulse-dot"></span>
+            AI Risk Engine Online
+          </div>
         </div>
       </header>
 
-      <main className="container">
+      {/* ============================================
+          HERO (dark, cinematic)
+      ============================================ */}
 
-        {/* ============================================
-            HERO
-        ============================================ */}
+      <section className="hero-section-dark">
 
-        <section className="hero-section">
+        <canvas ref={networkCanvasRef} className="network-canvas"></canvas>
 
-          <span className="eyebrow">
-            {activeModule.eyebrow}
-          </span>
+        <div className="hero-dark-inner">
 
-          <h1>
-            {activeModule.title}
+          <div className="threat-flow">
+
+            <div className="threat-labels threat-labels-in">
+              <span>Fake Reviews</span>
+              <span>Scam Products</span>
+              <span>Suspicious URLs</span>
+            </div>
+
+            <div className="shield-core">
+              <div className="shield-ring"></div>
+              <div className="shield-glow"></div>
+              <div className="shield-badge">🛡️</div>
+            </div>
+
+            <div className="threat-labels threat-labels-out">
+              <span>Authentic</span>
+              <span>Trusted</span>
+            </div>
+
+          </div>
+
+          <h1 className="hero-dark-title">
+            Unmasking deception.
+            <br />
+            AI for real-time fraud detection.
           </h1>
 
-          <p>
-            {activeModule.description}
+          <p className="hero-dark-desc">
+            Product risk, fake reviews, and phishing URLs — one AI
+            security layer.
           </p>
 
           <div className="security-stats">
@@ -457,7 +567,11 @@ function App() {
 
           </div>
 
-        </section>
+        </div>
+
+      </section>
+
+      <main className="container">
 
         {/* ============================================
             TOP-LEVEL MODULE SWITCH
@@ -969,7 +1083,7 @@ function App() {
             )}
 
             {loading && (
-              <div className="empty-result">
+              <div className="empty-result scanning">
 
                 <div className="loader"></div>
 
@@ -992,7 +1106,7 @@ function App() {
             {result &&
               !loading &&
               module === "review" && (
-                <div className="result-content">
+                <div className="result-content" key={JSON.stringify(result)}>
 
                   <div className="result-header">
 
@@ -1028,9 +1142,7 @@ function App() {
                       }`}
                       style={{
                         "--score":
-                          result.verdict === "Fake Review"
-                            ? "75%"
-                            : "25%",
+                          result.verdict === "Fake Review" ? 75 : 25,
                       }}
                     >
 
@@ -1162,7 +1274,7 @@ function App() {
             {result &&
               !loading &&
               module === "phishing" && (
-                <div className="result-content">
+                <div className="result-content" key={JSON.stringify(result)}>
 
                   <div className="result-header">
 
@@ -1201,11 +1313,11 @@ function App() {
                       style={{
                         "--score":
                           result.verdict?.toLowerCase().includes("phishing")
-                            ? `${Math.min(100, Number(result.confidence) || 75)}%`
-                            : `${Math.max(
+                            ? Math.min(100, Number(result.confidence) || 75)
+                            : Math.max(
                                 10,
                                 100 - (Number(result.confidence) || 50)
-                              )}%`,
+                              ),
                       }}
                     >
 
@@ -1383,7 +1495,7 @@ function App() {
             {result &&
               !loading &&
               module === "product" && (
-                <div className="result-content">
+                <div className="result-content" key={JSON.stringify(result)}>
 
                   <div className="result-header">
 
@@ -1414,10 +1526,10 @@ function App() {
                     <div
                       className={`score-circle ${getRiskClass(result.risk_level)}`}
                       style={{
-                        "--score": `${Math.min(
+                        "--score": Math.min(
                           100,
                           Math.max(0, Number(result.risk_score) || 0)
-                        )}%`,
+                        ),
                       }}
                     >
 

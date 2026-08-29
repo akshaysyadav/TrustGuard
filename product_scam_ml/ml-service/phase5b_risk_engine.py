@@ -1498,6 +1498,16 @@ def predict_product_risk(
         risk_score
     )
 
+    # A pure statistical anomaly (isolation forest) with zero concrete,
+    # explainable risk indicators means "unusual metadata shape" rather
+    # than "confirmed suspicious pattern" — e.g. a genuine, popular,
+    # premium-brand product can look statistically unusual simply for
+    # being unlike most items in the reference data. Without at least
+    # one concrete indicator backing it up, this shouldn't alone reach
+    # the top two severity bands.
+    if indicator_score == 0 and risk_level in ("HIGH", "CRITICAL"):
+        risk_level = "MEDIUM"
+
 
     # --------------------------------------------------------
     # EXPLANATIONS

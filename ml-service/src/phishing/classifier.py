@@ -18,7 +18,22 @@ class PhishingClassifier:
         "github.com",
         "microsoft.com",
         "apple.com",
-        "amazon.com"
+        # Amazon's country-specific storefronts (all the same company,
+        # all share the same long tracking-parameter URL style)
+        "amazon.com",
+        "amazon.in",
+        "amazon.co.uk",
+        "amazon.ca",
+        "amazon.de",
+        # Major e-commerce platforms whose product links commonly carry
+        # long affiliate/UTM tracking query strings — the raw model
+        # over-weights URL length and query-parameter count, so these
+        # legitimate links otherwise get misread as phishing.
+        "meesho.com",
+        "flipkart.com",
+        "myntra.com",
+        "ajio.com",
+        "gameloot.in",
     }
 
     def __init__(self, model_path: str):
@@ -44,12 +59,24 @@ class PhishingClassifier:
 
         return domain
 
+    def _is_safe_domain(self, domain: str) -> bool:
+        """
+        True if domain is a trusted domain itself, OR a subdomain of one
+        (e.g. docs.google.com, mail.google.com, drive.google.com).
+        An exact-match-only check misses that legitimate services
+        commonly live on subdomains of their main domain.
+        """
+        return any(
+            domain == safe or domain.endswith("." + safe)
+            for safe in self.SAFE_DOMAINS
+        )
+
     def predict(self, raw_url: str) -> dict:
 
         domain = self._get_domain(raw_url)
 
-        # Deterministic whitelist check
-        if domain in self.SAFE_DOMAINS:
+        # Deterministic whitelist check (covers subdomains too)
+        if self._is_safe_domain(domain):
             return {
                 "verdict": "Legitimate",
                 "confidence": 100.0,
