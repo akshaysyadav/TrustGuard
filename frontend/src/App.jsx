@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import tgLogo from "./assets/TG_logo.png";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://trustguard-backend-gfyq.onrender.com";
 
 const MODULE_CONFIG = {
   product: {
