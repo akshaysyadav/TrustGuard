@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-MODEL_PATH = "models/phishing/xgboost_phishing_model.pkl"
+MODEL_PATH = "models/phishing/xgboost_phishing_model.json"
 
 classifier = PhishingClassifier(MODEL_PATH)
 

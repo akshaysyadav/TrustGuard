@@ -1,7 +1,7 @@
 from src.phishing.classifier import PhishingClassifier
 
 
-MODEL_PATH = "models/phishing/xgboost_phishing_model.pkl"
+MODEL_PATH = "models/phishing/xgboost_phishing_model.json"
 
 
 def test_classifier_loads():

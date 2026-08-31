@@ -29,9 +29,15 @@ def extract_18_url_features(raw_url: str) -> dict:
     subdomains_list = [s for s in subdomain.split('.') if s and s != 'www']
     no_of_subdomain = len(subdomains_list)
 
-    # 5. Domain-body letter count (matching PhiUSIIL SLD logic)
-    sld_domain = ext.domain
-    no_of_letters = sum(c.isalpha() for c in sld_domain)
+    # 5. Letter count across the WHOLE url (not just the domain).
+    # The original version only counted letters in the domain's SLD,
+    # then divided by the full URL length - so any legitimate URL with
+    # a long, descriptive, human-readable path (completely normal for
+    # real e-commerce/blog/docs pages) got an artificially tiny letter
+    # ratio and looked suspicious, regardless of how legitimate the
+    # site actually was. The model has been retrained on this corrected
+    # definition (see models/phishing/xgboost_phishing_model.pkl, v4).
+    no_of_letters = sum(c.isalpha() for c in clean_url)
     letter_ratio = no_of_letters / url_length if url_length > 0 else 0.0
 
     # 6. Digits in entire URL string

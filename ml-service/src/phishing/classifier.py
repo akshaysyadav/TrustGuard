@@ -1,8 +1,9 @@
 import os
-import joblib
+import json
 import pandas as pd
 
 from urllib.parse import urlparse
+from xgboost import XGBClassifier
 
 from src.phishing.url_features import extract_18_url_features
 
@@ -37,16 +38,37 @@ class PhishingClassifier:
     }
 
     def __init__(self, model_path: str):
+        """
+        model_path should point to xgboost_phishing_model.json (XGBoost's
+        own native format). We deliberately avoid pickling the model
+        (joblib/pickle) since XGBoost's own pickle format isn't reliably
+        portable across different machines/OS/builds even at the same
+        version number - their own docs recommend save_model()/
+        load_model() for exactly this reason. feature_names is loaded
+        from a plain JSON file next to it instead of being pickled too.
+        """
 
         if not os.path.exists(model_path):
             raise FileNotFoundError(
                 f"Phishing model not found at: {model_path}"
             )
 
-        artifact = joblib.load(model_path)
+        metadata_path = os.path.join(
+            os.path.dirname(model_path), "model_metadata.json"
+        )
 
-        self.model = artifact["model"]
-        self.feature_names = artifact["feature_names"]
+        if not os.path.exists(metadata_path):
+            raise FileNotFoundError(
+                f"Model metadata not found at: {metadata_path}"
+            )
+
+        self.model = XGBClassifier()
+        self.model.load_model(model_path)
+
+        with open(metadata_path) as f:
+            metadata = json.load(f)
+
+        self.feature_names = metadata["feature_names"]
 
     def _get_domain(self, raw_url: str) -> str:
 
